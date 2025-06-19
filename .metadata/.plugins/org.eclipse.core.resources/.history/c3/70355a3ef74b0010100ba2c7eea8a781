@@ -1,0 +1,7 @@
+package com.tech.prjm05img;
+
+public class MyController {
+	public String test() {
+		return "tset";
+	}
+}

@@ -1,0 +1,19 @@
+package com.tech.prjm07;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MyController {
+	
+	@RequestMapping("/login/loginform")
+	public String loginform() {
+		
+		return "/login/loginform";
+	}
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,26 @@
+package com.tech.prjm07;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@Controller
+public class MyController {
+	
+	@RequestMapping("/login/loginform")
+	public String loginform() {
+		return "/login/loginform";
+	}
+	
+	@RequestMapping("/login/loginconfirm")
+	public String loginconfirm(HttpServletRequest request, Model model) {
+		model.addAttribute("id", id);
+		model.addAttribute("pw", pw);
+		return "/login/loginconfirm";
+	}
+	
+	
+	
+}

@@ -1,0 +1,8 @@
+package com.tech.ex;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+	//bean 등록
+}

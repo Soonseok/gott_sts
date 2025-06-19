@@ -1,0 +1,29 @@
+package com.tech.prjm06;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MyController {
+	
+	@RequestMapping("/")
+	public String idx() {
+		
+		return "index2";
+	}
+	
+	@RequestMapping("view")
+	public String view() {
+		
+		return "view";
+	}
+	
+	public String contentview(Model model) {
+		//send data
+		model.addAttribute("id", "blueeeeee");
+		model.addAttribute("name", "Dohee");
+		
+		return "/content/contentview";
+	}
+}

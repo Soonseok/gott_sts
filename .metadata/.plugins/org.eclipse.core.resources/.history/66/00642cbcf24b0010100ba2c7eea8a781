@@ -1,0 +1,47 @@
+package com.tech.ex;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+	//bean 등록
+	@Bean
+	public Student student1() {
+		Student student = new Student("김도희", "20");
+		student.setGradeNum("3");
+		student.setClassNum("Cosmology");
+		
+		ArrayList<String> hobbys = new ArrayList<>();
+		hobbys.add("WaveWay");
+		hobbys.add("ShaLala...");
+		student.setHobby(hobbys);
+		
+		HashMap<String, String> maps = new HashMap<>();
+		maps.put("1", "광어김밥");
+		maps.put("2", "키토김밥");
+		student.setMaps(maps);
+		
+		
+		return student;
+	}
+	
+	@Bean
+	public Student student2() {
+		Student student = new Student("정민하", "20");
+		student.setGradeNum("7");
+		student.setClassNum("Singing");
+		
+		return student;
+	}
+	
+	@Bean
+	public StudentInfo studentInfo() {
+		StudentInfo studentInfo = new StudentInfo(student1());
+		
+		return studentInfo;
+	}
+}

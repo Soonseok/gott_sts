@@ -1,0 +1,10 @@
+INDEX VERSION 1.134+C:\hsts2025\sts25_work\.metadata\.plugins\org.eclipse.jdt.core
+968006088.index
+2696661106.index
+3745793000.index
+1865797976.index
+3884971276.index
+3619485924.index
+1238920519.index
+1153099956.index
+2060440550.index

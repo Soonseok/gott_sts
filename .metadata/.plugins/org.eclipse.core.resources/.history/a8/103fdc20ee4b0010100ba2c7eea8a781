@@ -1,0 +1,10 @@
+package com.tech.ex;
+
+public class StudentInfo {
+	private Student student;
+
+	public StudentInfo(Student student) {
+		this.student = student;
+	}
+	
+}

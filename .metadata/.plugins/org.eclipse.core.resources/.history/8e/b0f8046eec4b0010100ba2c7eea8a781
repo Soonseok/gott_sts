@@ -1,0 +1,11 @@
+package com.tech.ex;
+
+public class Test {
+	public static void main(String[] args) {
+		Calculation calcul = new Calculation();
+		MyCalculator cal = new MyCalculator();
+		cal.setFirstNum(1);
+		cal.setSecondNum(2);
+		cal.add();
+	}
+}
