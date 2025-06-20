@@ -1,7 +1,0 @@
-package com.tech.ex;
-
-public class MainClass {
-	public static void main(String[] args) {
-		String configLocation = "classpath:"
-	}
-}
