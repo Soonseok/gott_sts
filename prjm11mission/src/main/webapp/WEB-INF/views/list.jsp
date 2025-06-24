@@ -22,11 +22,12 @@
 			<tr>
 				<td>${dto.gid }</td>
 				<td>${dto.gname }</td>
-				<td>${dto.gtitle }</td>
+				<td><a href="content_view?gid=${dto.gid }">${dto.gtitle }</a></td>
 				<td>${dto.gdate }</td>
 				<td>${dto.ghit }</td>
 			</tr>
 		</c:forEach>
 	</table>
+	<button onclick="location.href='write'">글쓰기</button>
 </body>
 </html>

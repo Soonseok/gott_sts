@@ -46,7 +46,55 @@ public class GDao {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(dtos);
 		return dtos;
+	}
+	
+	public GDto contentView(String sgid) {
+		GDto dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBCon.getConnection();
+			upHit(sgid, conn);
+			String sql = "select gid, gname, gtitle, gcontent, gdate, ghit, ggroup, gstep, gindent "
+					+ "from guroboard where gid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sgid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int gid = rs.getInt("gid");
+				String gname = rs.getString("gname");
+				String gtitle = rs.getString("gtitle");
+				String gcontent = rs.getString("gcontent");
+				Timestamp gdate = rs.getTimestamp("gdate");
+				int ghit = rs.getInt("ghit");
+				int ggroup = rs.getInt("ggroup");
+				int gstep = rs.getInt("gstep");
+				int gindent = rs.getInt("gindent");
+				dto = new GDto(gid, gname, gtitle, gcontent, gdate, ghit, ggroup, gstep, gindent);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+			}
+		}
+		return dto;
+	}
+	
+	public void upHit(String sgid, Connection gconn) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "update guroboard set ghit=ghit+1 where gid=?";
+			pstmt = gconn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(sgid));
+			int rn = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

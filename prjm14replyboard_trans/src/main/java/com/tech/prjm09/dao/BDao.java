@@ -208,18 +208,19 @@ public class BDao {
 		}
 	}
 	
-	public int reply(String bid, String bname, String btitle, String bcontent, 
+	public void reply(String bid, String bname, String btitle, String bcontent, 
 			String bindent, String bgroup, String bstep) {
-		int rn = 0;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBCon.getConnection();
 			conn.setAutoCommit(false);
-			replyShape(bgroup, bstep, conn);
+			int rn1 = replyShape(bgroup, bstep, conn);
+			System.out.println("rn1 : "+rn1);
+			
+			int rn2 = 0;
 			String sql = "insert into replyboard(bid,bname,btitle,"
 					+ "bcontent,bgroup,bstep,bindent) "
 					+ "values(replyboard_seq.nextval,?,?,?,?,?,?)";
-			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, bname);
 			pstmt.setString(2, btitle);
@@ -227,7 +228,16 @@ public class BDao {
 			pstmt.setInt(4, Integer.parseInt(bgroup));
 			pstmt.setInt(5, Integer.parseInt(bstep)+1);
 			pstmt.setInt(6, Integer.parseInt(bindent)+1);
-			rn = pstmt.executeUpdate();
+			rn2 = pstmt.executeUpdate();
+			System.out.println("rn2 : "+rn2);
+			
+			if(rn1 >= 0 && rn2 >= 1) {
+				conn.commit();
+				System.out.println(">>> Committed!!!");
+			}else {
+				conn.rollback();
+				System.out.println(">>> Rollbacked!!!");
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -239,7 +249,6 @@ public class BDao {
 				e2.printStackTrace();
 			}
 		}
-		return rn;
 	}
 	
 	public BDto replyView(String sbid) {
@@ -282,8 +291,9 @@ public class BDao {
 		return dto;
 	}
 	
-	public void replyShape(String strgroup, String strstep, Connection tracon) {
+	public int replyShape(String strgroup, String strstep, Connection tracon) {
 		PreparedStatement pstmt = null;
+		int rn = 0;
 		try {
 			//conn = DBCon.getConnection();
 			String sql = "update replyboard set bstep=bstep+1 where bgroup=? and bstep>?";
@@ -291,7 +301,7 @@ public class BDao {
 			pstmt = tracon.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(strgroup));
 			pstmt.setInt(2, Integer.parseInt(strstep));
-			int rn  =  pstmt.executeUpdate();
+			rn = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -303,5 +313,6 @@ public class BDao {
 				e2.printStackTrace();
 			}
 		}
+		return rn;
 	}
 }

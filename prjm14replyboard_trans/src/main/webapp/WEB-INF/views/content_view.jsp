@@ -35,7 +35,7 @@
 	<button type="button" onclick="location.href='list'">목록</button>
 	<button type="button" onclick="location.href='modify_view?bid=${content_view.bid}'">수정</button>
 	<button type="button" onclick="">삭제</button>
-	<button type="button" onclick="reply_view?bid='${content_view.bid }'">답변</button>
+	<button type="button" onclick="location.href='reply_view?bid=${content_view.bid }'">답변</button>
 
 
 </body>
