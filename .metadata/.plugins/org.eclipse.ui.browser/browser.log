@@ -14,3 +14,14 @@
 6월 24, 2025 16:54:11.35 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
 6월 24, 2025 16:54:11.35 I0000 00:00:1750751651.350017   14880 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
 6월 24, 2025 16:54:11.52 Created TensorFlow Lite XNNPACK delegate for CPU.
+
+6월 25, 2025 09:37:44.23 NEW SESSION
+6월 25, 2025 09:37:44.24 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+6월 25, 2025 09:37:44.24 I0000 00:00:1750811864.235850    7276 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+6월 25, 2025 09:37:44.40 Created TensorFlow Lite XNNPACK delegate for CPU.
+6월 25, 2025 12:35:48.35 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+6월 25, 2025 12:35:48.35 I0000 00:00:1750822548.350675   13928 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+6월 25, 2025 12:35:48.40 Created TensorFlow Lite XNNPACK delegate for CPU.
+6월 25, 2025 15:12:27.09 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+6월 25, 2025 15:12:27.09 I0000 00:00:1750831947.091753    7196 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+6월 25, 2025 15:12:27.13 Created TensorFlow Lite XNNPACK delegate for CPU.

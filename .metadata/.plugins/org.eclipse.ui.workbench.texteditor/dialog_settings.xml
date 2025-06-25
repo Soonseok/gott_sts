@@ -3,11 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="true"/>
 	<list key="replacehistory">
+		<item value="content_write"/>
+		<item value="reply_view"/>
+		<item value="  != "/>
+		<item value=" = "/>
 		<item value="https:"/>
 		<item value="h4"/>
 		<item value="https"/>
 	</list>
 	<list key="searchhistory">
+		<item value="content_view"/>
+		<item value="print"/>
+		<item value="BSTPE"/>
+		<item value="! ="/>
+		<item value="="/>
 		<item value="http:"/>
 		<item value="h2"/>
 		<item value="http"/>
