@@ -78,32 +78,26 @@
     const result = urlParams.get('result');
     const toast = document.getElementById('toast');
 
-    let message = '';
-    let type = ''; // 성공/실패 구분용
+    // 메시지와 스타일을 매핑
+    const toastMap = {
+        write_success:   { message: '글 작성 성공!', type: 'success' },
+        write_failure:   { message: '글 작성 실패!', type: 'failure' },
+        delete_success:  { message: '글 삭제 성공!', type: 'success' },
+        delete_failure:  { message: '글 삭제 실패!', type: 'failure' },
+        reply_success:   { message: '답변 작성 성공!', type: 'success' },
+        reply_failure:   { message: '답변 작성 실패!', type: 'failure' },
+        modify_success:  { message: '글 수정 성공!', type: 'success' },
+        modify_failure:  { message: '글 수정 실패!', type: 'failure' }
+    };
 
-    switch(result) {
-        case 'write_success':
-            message = '글 작성 성공!';
-            type = 'success';
-            break;
-        case 'write_failure':
-            message = '글 작성 실패!';
-            type = 'failure';
-            break;
-        case 'delete_success':
-            message = '글 삭제 성공!';
-            type = 'success';
-            break;
-        case 'delete_failure':
-            message = '글 삭제 실패!';
-            type = 'failure';
-            break;
-    }
+    // 해당 result 값이 toastMap에 존재할 경우만 표시
+    if (toastMap[result]) {
+        const { message, type } = toastMap[result];
 
-    if (message) {
         toast.textContent = message;
         toast.className = type;
         toast.style.display = 'block';
+
         setTimeout(() => {
             toast.style.opacity = '1';
         }, 100);

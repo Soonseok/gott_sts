@@ -54,8 +54,8 @@ public class BDao {
 		return dtos;
 	}
 	
-	public void write(String bname, String btitle,
-			String bcontent) {
+	public boolean write(String bname, String btitle, String bcontent) {
+		boolean result = false;
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -70,7 +70,7 @@ public class BDao {
 			pstmt.setString(3, bcontent);
 			
 			int rn = pstmt.executeUpdate();
-			
+			result = (rn > 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -80,6 +80,7 @@ public class BDao {
 			} catch (Exception e2) {
 			}
 		}
+		return result;
 	}
 	
 	public BDto contentView(String sbid) {
@@ -183,8 +184,9 @@ public class BDao {
 		}
 	}
 	
-	public void modify(String bid,String bname,
+	public boolean modify(String bid,String bname,
 			String btitle,String bcontent) {
+		boolean result = false;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBCon.getConnection();
@@ -198,7 +200,7 @@ public class BDao {
 			pstmt.setString(3, bcontent);
 			pstmt.setString(4, bid);
 			int rn = pstmt.executeUpdate();
-			
+			result = (rn > 0);
 		} catch (Exception e) {
 		}finally {
 			try {
@@ -207,11 +209,12 @@ public class BDao {
 			} catch (Exception e2) {
 			}
 		}
+		return result;
 	}
 	
-	public void reply(String bid, String bname, String btitle, String bcontent, 
+	public boolean reply(String bid, String bname, String btitle, String bcontent, 
 			String bindent, String bgroup, String bstep) {
-		
+		boolean result = false;
 		replyShape(bgroup, bstep);
 		PreparedStatement pstmt = null;
 		try {
@@ -228,7 +231,7 @@ public class BDao {
 			pstmt.setInt(5, Integer.parseInt(bstep)+1);
 			pstmt.setInt(6, Integer.parseInt(bindent)+1);
 			int rn  =  pstmt.executeUpdate();
-			
+			result = (rn > 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -239,6 +242,7 @@ public class BDao {
 				e2.printStackTrace();
 			}
 		}
+		return result;
 	}
 	
 	public BDto replyView(String sbid) {

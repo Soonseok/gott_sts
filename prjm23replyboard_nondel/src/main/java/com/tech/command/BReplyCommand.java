@@ -25,6 +25,13 @@ public class BReplyCommand implements BCommand{
 		String bgroup=request.getParameter("bgroup");
 		
 		BDao dao=new BDao();
-		dao.reply(bid, bname, btitle, bcontent, bindent, bgroup, bstep);
+		boolean replyResult = dao.reply(bid, bname, btitle, bcontent, bindent, bgroup, bstep);
+		if(replyResult) {
+			System.out.println("답변 작성 성공");
+			request.setAttribute("result", "reply_success");
+		}else {
+			System.out.println("답변 작성 실패");
+			request.setAttribute("result", "reply_failure");
+		}
 	}
 }

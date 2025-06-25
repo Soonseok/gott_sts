@@ -22,6 +22,13 @@ public class BModifyCommand implements BCommand{
 		String bcontent=request.getParameter("bcontent");
 		
 		BDao dao=new BDao();
-		dao.modify(bid,bname,btitle,bcontent);
+		boolean modifyResult = dao.modify(bid,bname,btitle,bcontent);
+		if(modifyResult) {
+			System.out.println("글 수정 성공");
+			request.setAttribute("result", "modify_success");
+		}else {
+			System.out.println("글 수정 실패");
+			request.setAttribute("result", "modify_failure");
+		}
 	}
 }

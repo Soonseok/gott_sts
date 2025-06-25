@@ -19,7 +19,6 @@ INDEX VERSION 1.134+C:\hsts2025\sts25_work\.metadata\.plugins\org.eclipse.jdt.co
 3884971276.index
 1041777675.index
 1153099956.index
-1762233142.index
 1829115593.index
 3864168304.index
 883138806.index

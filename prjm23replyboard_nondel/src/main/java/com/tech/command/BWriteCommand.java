@@ -22,8 +22,14 @@ public class BWriteCommand implements BCommand{
 		String bcontent=request.getParameter("bcontent");
 		
 		BDao dao=new BDao();
-		dao.write(bname,btitle,bcontent);
-		
+		boolean writeRwsult = dao.write(bname,btitle,bcontent);
+		if(writeRwsult) {
+			System.out.println("글 작성 성공");
+			request.setAttribute("result", "write_success");
+		}else {
+			System.out.println("글 작성 실패");
+			request.setAttribute("result", "write_failure");
+		}
 	}
 
 }

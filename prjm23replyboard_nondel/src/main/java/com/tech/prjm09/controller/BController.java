@@ -46,12 +46,12 @@ public class BController {
 	public String write(HttpServletRequest request,
 			Model model) {
 		System.out.println("write() ctr");
-//		db글쓰기동작
 		model.addAttribute("request",request);
 		command=new BWriteCommand();
 		command.execute(model);
 		
-		return "redirect:list";
+		String result = request.getAttribute("result").toString();
+	    return "redirect:list?result=" + result;
 	}
 	
 	@RequestMapping("/content_view")
@@ -83,7 +83,8 @@ public class BController {
 		command=new BModifyCommand();
 		command.execute(model);
 		
-		return "redirect:list";
+		String result = request.getAttribute("result").toString();
+	    return "redirect:list?result=" + result;
 	}
 	
 	@RequestMapping("/reply_view")
@@ -104,7 +105,8 @@ public class BController {
 		command=new BReplyCommand();
 		command.execute(model);
 		
-		return "redirect:list";
+		String result = request.getAttribute("result").toString();
+	    return "redirect:list?result=" + result;
 	}
 	
 	@RequestMapping("/delete")
