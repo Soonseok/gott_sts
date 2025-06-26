@@ -1,8 +1,0 @@
-server.port = 8505
-
-spring.mvc.view.prefix = /WEB-INF/views/
-spring.mvc.view.serffix = .jsp
-spring.mvc.static-path-pattern= = /static/**
-
-spring.web.resources.static-locations = calsspath:/static/
-spring.web.resources.add-mappings = true

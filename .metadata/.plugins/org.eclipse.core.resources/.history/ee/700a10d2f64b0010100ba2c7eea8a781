@@ -1,9 +1,0 @@
-server.port=8505
-
-#jsp settings
-spring.mvc.view.prefix=/WEB-INF/views
-spring.mvc.view.suffix=.jsp
-
-spring.mvc.static-path-pattern=/static/**
-spring.resources.static-locations=classpath:/static/
-spring.resources.add-mappings=true

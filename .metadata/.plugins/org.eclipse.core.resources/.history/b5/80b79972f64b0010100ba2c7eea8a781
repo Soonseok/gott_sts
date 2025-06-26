@@ -1,4 +1,0 @@
-server.port=8505
-
-#jsp settings
-spring.mvc.view.prefix=/WEB-INF/views
