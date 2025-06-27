@@ -6,13 +6,75 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-<title>list</title>
+<title>list-toast</title>
 </head>
 <body>
 <!-- toast -->
 <div id="toast"></div>
 
-<h1>list</h1>
+<div class="page-info-bar">
+	<h1>list</h1>
+	<div class="info">
+		전체 글 : ${totRowCnt }<br />
+		현재 / 전체 페이지 : ${searchVO.page } / ${searchVO.totPage }
+	</div>
+</div>
+<div><br /></div>
+
+<!-- 검색바 -->
+<div class="searchContainer">
+	<form action="list" method="get">
+		<select name="searchType">
+			<option value="title" ${searchType == 'title' ? 'selected' : ''}>제목</option>
+			<option value="name" ${searchType == 'name' ? 'selected' : ''}>이름</option>
+			<option value="content" ${searchType == 'content' ? 'selected' : ''}>내용</option>
+		</select>
+		<input type="text" name="searchKeyword" id="q" value="${query}" onclick="clearVal()" />
+		<input type="submit" value="검색" />
+	</form>
+</div>
+
+<div><br /></div>
+<!-- 페이징 UI -->
+<div class="pagination-wrapper">
+	<div class="pagination-controls">
+		<!-- 처음 / 이전 -->
+		<c:set var="prevPage" value="${searchVO.page - 1}" />
+		<c:if test="${prevPage < 1}">
+		    <c:set var="prevPage" value="1" />
+		</c:if>
+		<a class="nav <c:if test='${searchVO.page == 1}'>disabled</c:if>'" href="list?page=1">처음</a>
+		<a class="nav <c:if test='${searchVO.page == 1}'>disabled</c:if>'" href="list?page=${prevPage}">이전</a>
+
+		<!-- 구분 공간 -->
+		<span class="spacer"></span>
+
+		<!-- 숫자 버튼 -->
+		<c:forEach begin="${searchVO.pageStart}" end="${searchVO.pageEnd}" var="i">
+			<c:choose>
+				<c:when test="${i eq searchVO.page}">
+					<span class="current">${i}</span>
+				</c:when>
+				<c:otherwise>
+					<a href="list?page=${i}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+
+		<!-- 구분 공간 -->
+		<span class="spacer"></span>
+
+		<!-- 다음 / 마지막 -->
+		<c:set var="nextPage" value="${searchVO.page + 1}" />
+		<c:if test="${nextPage > searchVO.totPage}">
+		    <c:set var="nextPage" value="${searchVO.totPage}" />
+		</c:if>
+		<a class="nav <c:if test='${searchVO.page == searchVO.totPage}'>disabled</c:if>'" href="list?page=${nextPage}">다음</a>
+		<a class="nav <c:if test='${searchVO.page == searchVO.totPage}'>disabled</c:if>'" href="list?page=${searchVO.totPage}">마지막</a>
+	</div>
+</div>
+
+<!-- 테이블 출력 -->
 <table width="100%">
 	<tr>
 		<td>번호</td>
@@ -44,6 +106,10 @@
 </body>
 <!-- toast js+css -->
 <style>
+	body{
+		margin-top: 4rem;
+	}
+	
     #toast {
 	    position: fixed;
 	    top: 20px;
@@ -71,6 +137,69 @@
     #toast.failure {
         background-color: #F1143F;
     }
+    }
+	.pagination-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1rem;
+	}
+	.pagination-controls {
+		display: flex;
+		justify-content: center;
+		gap: 8px; /* 버튼들 간 간격 넓힘 */
+		flex-wrap: wrap;
+	}
+	.pagination-controls a,
+	.pagination-controls span {
+		border: 1px solid #0d47a1;
+		border-radius: 6px;
+		padding: 4px 10px;
+		color: #0d47a1;
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+	.pagination-controls a:hover {
+		background-color: #E0ECFF;
+	}
+	.pagination-controls .nav {
+		background-color: #0d47a1;
+		color: white;
+		font-weight: bold;
+	}
+	.pagination-controls .disabled {
+		pointer-events: none;
+		background-color: #ccc;
+		color: white;
+		border-color: #ccc;
+	}
+	.pagination-controls .current {
+		background-color: #0d47a1;
+		color: white;
+		font-weight: bold;
+	}
+	.pagination-controls .spacer {
+		display: inline-block;
+		border:none;
+		width: 24px;
+	}
+	}
+	.page-info-bar {
+		margin-bottom: 2rem;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+	.page-info-bar h1 {
+		margin: 0;
+	}
+	.page-info-bar .info {
+		text-align: right;
+		font-size: 0.9rem;
+	}
+	.searchContainer{
+	
+	}
 </style>
 
 <script>
@@ -109,5 +238,10 @@
             }, 500);
         }, 3000);
     }
+    
+    function clearVal(){
+		let inputVal = document.getElementById("q");
+		inputVal.value = "";
+	}
 </script>
 </html>

@@ -7,4 +7,50 @@
 	<select id="getAllList" resultType="com.tech.prjm11.dto.GDto">
 		SELECT GID, GNAME, GTITLE, GCONTENT, GDATE, GHIT, GGROUP, GSTEP, GINDENT FROM GUROBOARD ORDER BY GID DESC
 	</select>
+	
+	<select id="countTotalContents" resultType="Integer">
+		SELECT COUNT(*) FROM GUROBOARD
+	</select>
+	
+	<select id="contentView">
+		SELECT GID, GNAME, GTITLE, GCONTENT, GDATE, GHIT, GGROUP, GSTEP, GINDENT 
+		FROM GUROBOARD WHERE GID=#{param1}
+	</select>
+	
+	<update id="upHit">
+		UPDATE GUROBOARD SET GHIT = GHIT+1 WHERE GID = #{param1}
+	</update>
+	
+	<select id="modifyView">
+		SELECT GID,GNAME,GTITLE,GCONTENT, 
+		GDATE,GHIT,GGROUP,GSTEP,GINDENT  
+		FROM GUROBOARD WHERE GID = #{param1}
+	</select>
+	
+	<select id="replyView">
+		SELECT BID,BNAME,BTITLE,BCONTENT,BDATE,BHIT,BGROUP,BSTEP,BINDENT 
+		FROM GUROBOARD WHERE BID = #{param1}
+	</select>
+	
+	<insert id="write">
+		INSERT INTO GUROBOARD(GID, GNAME, GTITLE, GCONTENT, GDATE, GHIT, GGROUP, GSTEP, GINDENT) 
+		VALUES(GUROBOARD_SEQ.NEXTVAL,#{param1} , #{param1}, #{param1},SYSDATE,0,GUROBOARD_SEQ.CURRVAL,0,0)
+	</insert>
+	
+	<update id="modify">
+		UPDATE GUROBOARD SET GNAME = #{param2}, GTITLE = #{param3}, GCONTENT = #{param4} WHERE GID = #{param1}
+	</update>
+	
+	<insert id="reply">
+		INSERT INTO GUROBOARD(GID, GNAME, GTITLE, GCONTENT, GDATE, GHIT, GGROUP, GSTEP, GINDENT) 
+		VALUES(GUROBOARD_SEQ.NEXTVAL,#{param2},#{param3},#{param4},#{param6},#{param7}+1,#{param5}+1)
+	</insert>
+	
+	<update id="replyShape">
+		UPDATE GUROBOARD SET GSTEP=GSTEP+1 WHERE GGROUP=#{param1} AND GSTEP>#{param2}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM GUROBOARD WHERE GID=#{param1}
+	</delete>
 </mapper>

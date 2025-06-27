@@ -1,5 +1,6 @@
 package com.tech.prjm09.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import com.tech.command.BReplyViewCommand;
 import com.tech.command.BWriteCommand;
 import com.tech.prjm09.dao.IDao;
 import com.tech.prjm09.dto.BDto;
+import com.tech.prjm09.util.SearchVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -39,11 +41,40 @@ public class BController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(Model model) {
-		System.out.println("list() mybatis");
-		ArrayList<BDto> list = iDao.list();
+	public String list(HttpServletRequest request, Model model, SearchVO searchVO) {
+		System.out.println("list() ctr");
+
+		// 1. 페이지 번호 처리
+		String strPage = request.getParameter("page");
+		if (strPage == null || strPage.isEmpty()) {
+			strPage = "1";
+		}
+		int page = Integer.parseInt(strPage);
+		searchVO.setPage(page);
+
+		// 2. 검색 처리
+		String type = searchVO.getSearchType();     // 예: title, content, name
+		String keyword = searchVO.getSearchKeyword(); // 사용자가 입력한 검색어
+
+		System.out.println("검색 유형: " + type);
+		System.out.println("검색어: " + keyword);
+
+		// 3. 전체 게시물 수 (검색 포함)
+		int total = iDao.selectBoardCount(type, keyword);
+		searchVO.pageCalculate(total);
+
+		// 4. 리스트 조회 (검색 포함)
+		int startRow = searchVO.getRowStart();
+		int endRow = searchVO.getRowEnd();
+		ArrayList<BDto> list = iDao.list(type, keyword, startRow, endRow);
+
+		// 5. model에 전달
 		model.addAttribute("list", list);
-		
+		model.addAttribute("totRowCnt", total);
+		model.addAttribute("searchVO", searchVO);
+		model.addAttribute("searchType", type);
+		model.addAttribute("query", keyword);
+
 		return "list";
 	}
 
@@ -72,6 +103,7 @@ public class BController {
 			Model model) {
 		System.out.println("content_view() mybatis");
 		String bid=request.getParameter("bid");
+		iDao.upHit(bid);
 		BDto dto = iDao.contentView(bid);
 		model.addAttribute("content_view", dto);
 		
@@ -82,8 +114,8 @@ public class BController {
 			Model model) {
 		System.out.println("modify_view() mybatis");
 		String bid=request.getParameter("bid");
-		BDto bto = iDao.modifyView(bid);
-		model.addAttribute("content_view", bto);
+		BDto dto = iDao.modifyView(bid);
+		model.addAttribute("content_view", dto);
 		
 		return "modify_view";
 	}
@@ -132,28 +164,41 @@ public class BController {
 	
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request) {
-	    System.out.println("delete() mybatis");
-
 	    String bid = request.getParameter("bid");
 	    String bgroup = request.getParameter("bgroup");
 
 	    Map<String, Object> resultMap = iDao.check_indent(bid, bgroup);
+	    System.out.println(resultMap);
+	    
+	    try {
+	        BigDecimal stepObj = (BigDecimal) resultMap.get("OWN_STEP");
+	        BigDecimal indentObj = (BigDecimal) resultMap.get("OWN_INDENT");
+	        BigDecimal maxSameObj = (BigDecimal) resultMap.get("MAX_SAME");
+	        BigDecimal maxIndentObj = (BigDecimal) resultMap.get("MAX_INDENT");
 
-	    int ownStep = (Integer) resultMap.get("own_step");
-	    int ownIndent = (Integer) resultMap.get("own_indent");
-	    int maxSame = (Integer) resultMap.get("max_same");
-	    int maxIndent = (Integer) resultMap.get("max_indent");
+	        if (stepObj == null || indentObj == null || maxSameObj == null || maxIndentObj == null) {
+	            return "redirect:list?result=delete_failure";
+	        }
 
-	    boolean removable = (maxSame == ownStep) || 
-	                        (maxSame != ownStep && ownIndent == maxIndent);
+	        int ownStep = stepObj.intValue();
+	        int ownIndent = indentObj.intValue();
+	        int maxSame = maxSameObj.intValue();
+	        int maxIndent = maxIndentObj.intValue();
 
-	    boolean result = false;
-	    if (removable) {
-	        int delCount = iDao.delete(bid, bgroup);
-	        result = delCount > 0;
+	        boolean removable = (maxSame == ownStep) || 
+	                            (maxSame != ownStep && ownIndent == maxIndent);
+
+	        boolean result = false;
+	        if (removable) {
+	            result = iDao.delete(bid) > 0;
+	        }
+
+	        String message = result ? "delete_success" : "delete_failure";
+	        return "redirect:list?result=" + message;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "redirect:list?result=delete_failure";
 	    }
-
-	    String message = result ? "delete_success" : "delete_failure";
-	    return "redirect:list?result=" + message;
 	}
 }

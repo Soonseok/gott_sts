@@ -2,12 +2,61 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
 <mapper namespace="com.tech.prjm09.dao.IDao">
-	<select id="list" resultType="com.tech.prjm09.dto.BDto">
+<!-- 	<select id="list" resultType="com.tech.prjm09.dto.BDto">
 		SELECT BID,BNAME,BTITLE,BCONTENT, 
 		BDATE,BHIT,BGROUP,BSTEP,BINDENT 
 		FROM REPLYBOARD 
 		ORDER BY BGROUP DESC, BSTEP ASC
+		SELECT * FROM 
+		(SELECT ROWNUM NUM, N.* FROM (SELECT * FROM REPLYBOARD ORDER BY BGROUP DESC, BSTEP ASC) N)
+		WHERE NUM BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="selectBoardCount" resultType="Integer">
+		SELECT COUNT(*) FROM REPLYBOARD
+	</select> -->
+	<select id="selectBoardList" resultType="BDto">
+	  SELECT * FROM (
+	    SELECT ROWNUM AS RNUM, A.* FROM (
+	      SELECT * FROM REPLYBOARD
+	      <where>
+	        <when test="param1 == 'name'">
+	          name LIKE '%' || #{param2} || '%'
+	        </when>
+	        <when test="param1 == 'title'">
+	          title LIKE '%' || #{param2} || '%'
+	        </when>
+	        <when test="param1 == 'content'">
+	          content LIKE '%' || #{param2} || '%'
+	        </when>
+	      </where>
+	      ORDER BY BGROUP DESC, BSTEP ASC
+	    ) A
+	  )
+	  WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
+
+	<select id="list" resultType="com.tech.prjm09.dto.BDto">
+		SELECT * FROM (
+			SELECT ROWNUM AS RNUM, A.* FROM (
+				SELECT * FROM REPLYBOARD
+				<where>
+					<if test="param1 == 'title'">
+						title LIKE CONCAT('%', #{param2}, '%')
+					</if>
+					<if test="param1 == 'content'">
+						content LIKE CONCAT('%', #{param2}, '%')
+					</if>
+					<if test="param1 == 'name'">
+						name LIKE CONCAT('%', #{param2}, '%')
+					</if>
+				</where>
+				ORDER BY BGROUP DESC, BSTEP ASC
+			) A
+		) WHERE RNUM BETWEEN #{param3} AND #{param4}
 	</select>
 	
 	<select id="contentView">
@@ -44,7 +93,7 @@
 		UPDATE REPLYBOARD SET BSTEP=BSTEP+1 WHERE BGROUP=#{param1} AND BSTEP>#{param2}
 	</update>
 	
-	<select id="checkIndent" resultType="map">
+	<select id="check_indent" resultType="map">
 		SELECT
 			(SELECT BINDENT FROM REPLYBOARD WHERE BID = #{param1}) AS OWN_INDENT,
 			(SELECT BSTEP FROM REPLYBOARD WHERE BID = #{param1}) AS OWN_STEP,
@@ -58,4 +107,8 @@
 	<delete id="delete">
 		DELETE FROM REPLYBOARD WHERE BID=#{param1}
 	</delete>
+	
+	<update id="upHit">
+		UPDATE REPLYBOARD SET BHIT = BHIT+1 WHERE BID = #{param1}
+	</update>
 </mapper>

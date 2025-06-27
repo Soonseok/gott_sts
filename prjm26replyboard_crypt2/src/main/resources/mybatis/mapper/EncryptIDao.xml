@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tech.prjm09.dao.EncryptIDao">
+	<insert id="join">
+		INSERT INTO CRYPTMEMBER 
+		VALUES(CRYPTMEMBER_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4})
+	</insert>
+
+	<select id="getMember" resultType="com.tech.prjm09.dto.CMember">
+		SELECT MNO, MID, MPW, MBCPWD, MSHPWD FROM CRYPTMEMBER 
+		WHERE MID = #{param1}
+	</select>
+</mapper>

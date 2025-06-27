@@ -25,3 +25,12 @@
 6월 25, 2025 15:12:27.09 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
 6월 25, 2025 15:12:27.09 I0000 00:00:1750831947.091753    7196 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
 6월 25, 2025 15:12:27.13 Created TensorFlow Lite XNNPACK delegate for CPU.
+
+6월 27, 2025 09:51:12.23 NEW SESSION
+6월 27, 2025 09:51:12.24 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+6월 27, 2025 09:51:12.24 I0000 00:00:1750985472.231968    3600 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+6월 27, 2025 09:51:12.30 Created TensorFlow Lite XNNPACK delegate for CPU.
+6월 27, 2025 11:05:59.78 [14544:1428:0627/110559.783:ERROR:mojo\public\cpp\bindings\lib\interface_endpoint_client.cc:732] Message 5 rejected by interface blink.mojom.WidgetHost
+6월 27, 2025 17:21:00.22 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+6월 27, 2025 17:21:00.22 I0000 00:00:1751012460.222266    3712 voice_transcription.cc:58] Registering VoiceTranscriptionCapability
+6월 27, 2025 17:21:00.48 Created TensorFlow Lite XNNPACK delegate for CPU.
