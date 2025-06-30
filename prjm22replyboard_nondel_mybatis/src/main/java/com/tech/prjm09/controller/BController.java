@@ -52,28 +52,16 @@ public class BController {
 		int page = Integer.parseInt(strPage);
 		searchVO.setPage(page);
 
-		// 2. 검색 처리
-		String type = searchVO.getSearchType();     // 예: title, content, name
-		String keyword = searchVO.getSearchKeyword(); // 사용자가 입력한 검색어
-
-		System.out.println("검색 유형: " + type);
-		System.out.println("검색어: " + keyword);
-
-		// 3. 전체 게시물 수 (검색 포함)
-		int total = iDao.selectBoardCount(type, keyword);
+		int total = iDao.selectBoardCount();
 		searchVO.pageCalculate(total);
 
-		// 4. 리스트 조회 (검색 포함)
 		int startRow = searchVO.getRowStart();
 		int endRow = searchVO.getRowEnd();
-		ArrayList<BDto> list = iDao.list(type, keyword, startRow, endRow);
+		ArrayList<BDto> list = iDao.list(startRow, endRow);
 
-		// 5. model에 전달
 		model.addAttribute("list", list);
 		model.addAttribute("totRowCnt", total);
 		model.addAttribute("searchVO", searchVO);
-		model.addAttribute("searchType", type);
-		model.addAttribute("query", keyword);
 
 		return "list";
 	}

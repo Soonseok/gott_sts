@@ -3,6 +3,8 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="true"/>
 	<list key="replacehistory">
+		<item value="GUROBOARD"/>
+		<item value="#0d47a1"/>
 		<item value="prjm19anno_autow"/>
 		<item value="16"/>
 		<item value="content_write"/>
@@ -14,6 +16,12 @@
 		<item value="https"/>
 	</list>
 	<list key="searchhistory">
+		<item value="REPLYBOARD"/>
+		<item value="selectBoardCount"/>
+		<item value="page-info-bar"/>
+		<item value="#1266E2"/>
+		<item value="pageGrpCnt"/>
+		<item value="spacer"/>
 		<item value="modify"/>
 		<item value="prjm17anno"/>
 		<item value="15"/>
@@ -23,8 +31,6 @@
 		<item value="! ="/>
 		<item value="="/>
 		<item value="http:"/>
-		<item value="h2"/>
-		<item value="http"/>
 	</list>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="selection" value=""/>

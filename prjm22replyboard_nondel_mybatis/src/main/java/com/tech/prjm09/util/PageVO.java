@@ -42,7 +42,8 @@ public class PageVO {
 		// 현재 페이지에 따른 시작/끝 row 번호
 		rowStart = ((page - 1) * displayRowCount) + 1;
 		rowEnd = rowStart + displayRowCount - 1;
-
+		setRowStart(rowStart);
+		setRowEnd(rowEnd);
 		// ★ 동적 페이지네이션 시작
 		int pageCount = pageGrpCnt; // 보여줄 최대 페이지 번호 개수 (예: 10)
 		int half = pageCount / 2;

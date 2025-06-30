@@ -9,8 +9,8 @@ import com.tech.prjm09.dto.BDto;
 
 @Mapper
 public interface IDao {
-	ArrayList<BDto> list(String type, String keyword, int start, int end);
-	int selectBoardCount(String type, String keyword);
+	ArrayList<BDto> list(int start, int end);
+	int selectBoardCount();
 	public BDto contentView(String sbid);
 	public BDto modifyView(String sbid);
 	public BDto replyView(String sbid);
